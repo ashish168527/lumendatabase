@@ -62,6 +62,8 @@ Rails.application.routes.draw do
 
   get 'blog_feed', to: 'blog_feed#index'
 
+  resources :api_submitter_requests
+
   root to: 'home#index'
 
   comfy_route :cms_admin, path: "/cms_admin"

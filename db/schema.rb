@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_23_193057) do
+ActiveRecord::Schema.define(version: 2021_03_26_174331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,29 @@ ActiveRecord::Schema.define(version: 2021_02_23_193057) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "api_submitter_requests", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "submissions_forward_email", null: false
+    t.text "description", default: ""
+    t.string "entity_name", null: false
+    t.string "entity_kind", default: "individual", null: false
+    t.string "entity_address_line_1", default: ""
+    t.string "entity_address_line_2", default: ""
+    t.string "entity_state", default: ""
+    t.string "entity_country_code", default: ""
+    t.string "entity_phone", default: ""
+    t.string "entity_url", default: ""
+    t.string "entity_email", default: ""
+    t.string "entity_city", default: ""
+    t.string "entity_zip", default: ""
+    t.text "admin_notes", default: ""
+    t.bigint "user_id"
+    t.boolean "approved"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_api_submitter_requests_on_user_id"
   end
 
   create_table "comfy_cms_categories", force: :cascade do |t|
@@ -456,9 +479,12 @@ ActiveRecord::Schema.define(version: 2021_02_23_193057) do
     t.integer "notice_viewer_viewed_notices", default: 0, null: false
     t.datetime "notice_viewer_time_limit"
     t.boolean "limit_notice_api_response", default: false, null: false
+    t.string "widget_submissions_forward_email"
+    t.string "widget_public_key"
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["widget_public_key"], name: "index_users_on_widget_public_key", unique: true
   end
 
   create_table "works", id: :serial, force: :cascade do |t|
