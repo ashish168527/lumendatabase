@@ -11,3 +11,6 @@ Rails.application.config.assets.version = '1.0'
 
 # In case of node
 # Rails.application.config.assets.paths << Rails.root.join('node_modules')
+
+Rails.application.config.assets.non_digest_named_assets = ['widgets/*.js']
+Rails.application.config.assets.precompile += %w[widgets/submitter.js]
