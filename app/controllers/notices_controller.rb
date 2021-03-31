@@ -12,11 +12,7 @@ class NoticesController < ApplicationController
     (render :submission_disabled and return) if cannot?(:submit, Notice)
     (render :select_type and return) if params[:type].blank?
 
-    model_class = get_notice_type(params)
-    @notice = model_class.new
-    build_entity_notice_roles(model_class)
-    @notice.file_uploads.build(kind: 'supporting')
-    build_works(@notice)
+    build_new_notice
   end
 
   # In commit d7879d0 and prior, this was split into a two-part process with a
@@ -260,5 +256,13 @@ class NoticesController < ApplicationController
       render :show
       run_show_callbacks
     end
+  end
+
+  def build_new_notice
+    model_class = get_notice_type(params)
+    @notice = model_class.new
+    build_entity_notice_roles(model_class)
+    @notice.file_uploads.build(kind: 'supporting')
+    build_works(@notice)
   end
 end
